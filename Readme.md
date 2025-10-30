@@ -38,7 +38,7 @@ Avant l'installation, assurez-vous d'avoir :
 ### 1. Cloner le dépôt
 
 ```bash
-git clone https://github.com/assadi-dev/deploy-sentinel   Remplacez par l'URL de votre repo si différent
+git clone https://github.com/assadi-dev/deploy-sentinel
 ```
 
 ### 2. Entrer dans le répertoire du projet
@@ -51,7 +51,7 @@ cd deploy-sentinel
 
 ```bash
 npm install -g typescript tsc
-tsc --init                        
+tsc --init # optionnel                       
 ```
 
 ### 4. Installer les packages Node.js
@@ -88,7 +88,7 @@ SERVER_ID= id_de_votre_serveur_discord
 tsc
 
 # Exécuter le fichier compilé
-node dist/index.js
+node dist/main.js
 ```
 
 Vous pouvez aussi utiliser `npm` pour simplifier :
@@ -99,11 +99,16 @@ Vous pouvez aussi utiliser `npm` pour simplifier :
    ```
 
 2. Lancez directement :
-   ```bash
-3.  npm run dev
-   # ou
-4.   tsc && node dist/index.js
-```
+    ```bash
+    npm start
+    ```
+3. Lancer en mode dev:
+    ```bash
+    npm run dev
+    ```
+  
+
+
 
 
 
