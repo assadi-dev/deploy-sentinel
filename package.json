@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "discord.js": "^14.24.1",
+    "tsyringe": "^3.3.0",
     "zod": "^4.1.12"
   }
 }
