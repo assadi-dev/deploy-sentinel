@@ -24,8 +24,10 @@
   },
   "dependencies": {
     "discord.js": "^14.24.1",
+    "eventsource": "^4.0.0",
     "reflect-metadata": "^0.2.2",
     "tsyringe": "^3.3.0",
+    "ws": "^8.18.3",
     "zod": "^4.1.12"
   }
 }

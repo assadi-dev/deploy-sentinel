@@ -1,9 +1,12 @@
-import { ENV } from "@core/env";
-import { Client, Events, GatewayIntentBits } from "discord.js";
+// Enable decorators
+import "reflect-metadata";
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
-client.once(Events.ClientReady, (readyClient) => {
-  console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-});
+// Enable env config
+import "dotenv/config";
 
-client.login(ENV.DISCORD_BOT_TOKEN);
+import "./core/env";
+
+//Enable dependencies
+
+// Discord client
+import "./client";

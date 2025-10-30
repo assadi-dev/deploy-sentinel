@@ -35,26 +35,34 @@ Avant l'installation, assurez-vous d'avoir :
 
 ## 📦 Installation du projet
 
-### 1. Cloner le dépôt
+### 1. Créer le bot sur Discord
+
+Rendez vous sur  le site [Discord Developer Portal](https://discord.com/developers/applications)
+
+Crée une application → ajoute un Bot → copie son token
+
+Invite le bot sur votre serveur avec les permissions Send Messages
+
+### 2. Cloner le dépôt
 
 ```bash
 git clone https://github.com/assadi-dev/deploy-sentinel
 ```
 
-### 2. Entrer dans le répertoire du projet
+### 3. Entrer dans le répertoire du projet
 
 ```bash
 cd deploy-sentinel
 ```
 
-### 3. Installer les dépendances TypeScript
+### 4. Installer les dépendances TypeScript
 
 ```bash
 npm install -g typescript tsc
 tsc --init # optionnel                       
 ```
 
-### 4. Installer les packages Node.js
+### 5. Installer les packages Node.js
 
 ```bash
 npm install 
@@ -68,7 +76,7 @@ npm install
 
 ```env
 APPLICATION_ID=id_de_votre_application_géneré_par_dockploy
-DISCORD_BOT_TOKEN= le_token_de_votre_bot_ici
+DISCORD_BOT_TOKEN=le_token_de_votre_bot_ici
 SERVER_ID= id_de_votre_serveur_discord
 ```
 
