@@ -1,8 +1,6 @@
-import dotenv from "dotenv";
-dotenv.config();
-const sayHello = (name: string) => {
-  console.log(`Welcome ${name} to the server!`);
-  console.log(process.env.TOKEN);
-};
+import { ENV } from "@core/env";
+import { Client, Events, GatewayIntentBits } from "discord.js";
 
-sayHello("Assadi");
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+client.login(ENV.DISCORD_BOT_TOKEN);
