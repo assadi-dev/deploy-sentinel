@@ -1,3 +1,5 @@
+import { NtfyInferModel } from "@models/ntfyModel";
+
 export const NTFY_MESSAGE_MOCK = {
   success: {
     id: "jTg1JSFmtGNO",
@@ -10,7 +12,7 @@ export const NTFY_MESSAGE_MOCK = {
       "🛠Project: Notifications\n⚙️Application: ntfy\n❔Type: compose\n🕒Date: 10/31/2025, 5:57:45 PM",
     priority: 5,
     tags: ["white_check_mark"],
-    acttions: [
+    actions: [
       {
         id: "qWo1AZR1PG",
         action: "view",
@@ -21,4 +23,7 @@ export const NTFY_MESSAGE_MOCK = {
     ],
   },
   failed: {},
+} satisfies {
+  success: NtfyInferModel;
+  failed: any;
 };
