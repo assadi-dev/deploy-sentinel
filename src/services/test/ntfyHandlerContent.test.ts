@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { NTFY_MESSAGE_MOCK } from "@mocks/ntfyMessage";
 import { NtfyHandlerContent } from "@services/ntfyHandlerContent";
+import { ZodError } from "zod";
 
 const makeValidPayload = () => NTFY_MESSAGE_MOCK.success;
 
@@ -16,5 +17,18 @@ describe("ntfyHandlerContent.parseToNtfyData", () => {
     expect(res.acttions).toBeDefined();
     expect(Array.isArray(res.acttions)).toBe(true);
     expect(res.acttions[0].url).toBeDefined();
+  });
+
+  it("échoue si un champ requis manque (ex: message)", () => {
+    const { message, ...withoutTitle } = makeValidPayload();
+    expect(() => handler.parseToNtfyData(withoutTitle as any)).toThrow(
+      ZodError
+    );
+    try {
+      handler.parseToNtfyData(withoutTitle as any);
+    } catch (e) {
+      const ze = e as ZodError;
+      expect(ze.issues.some((i) => i.path.join(".") === "message")).toBe(true);
+    }
   });
 });
