@@ -1,15 +1,10 @@
 import { defineConfig } from "vitest/config";
-import path from "node:path";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  plugins: [tsconfigPaths()],
   test: {
     environment: "node",
     globals: true,
-  },
-  resolve: {
-    alias: {
-      "@models": path.resolve(__dirname, "./src/models"),
-      "@mocks": path.resolve(__dirname, "./src/mocks"),
-    },
   },
 });

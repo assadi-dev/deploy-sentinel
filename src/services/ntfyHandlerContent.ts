@@ -1,6 +1,6 @@
 import { NtfyInferModel, ntfySchemaModel } from "@models/ntfyModel";
 
-class ntfyHandlerContent {
+export class NtfyHandlerContent {
   parseToNtfyData(inputs: unknown): NtfyInferModel {
     const validate = ntfySchemaModel.safeParse(inputs);
     if (validate.error) throw validate.error;
