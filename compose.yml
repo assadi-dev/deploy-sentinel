@@ -27,7 +27,9 @@ services:
       - NTFY_BEHIND_PROXY=true
       - NTFY_AUTH_DEFAULT_ACCESS=deny-all
   
-
+    networks:
+      - ext
+      
     volumes:
       - ./data/ntfy/cache:/var/cache/ntfy
       - ./data/ntfy/config:/etc/ntfy
@@ -43,6 +45,22 @@ services:
     restart: unless-stopped
     init: true # needed, if healthcheck is used. Prevents zombie processes
 
+  tunnel:
+    image: cloudflare/cloudflared:latest 
+    container_name: ntfy_tunnel
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    networks:
+      - ext
+  
+
+
+networks:
+  ext:
+    name: external_network
+    
 volumes:
   gotify_data:
   ntfy_cache:
