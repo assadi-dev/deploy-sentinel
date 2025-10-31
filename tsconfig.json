@@ -24,6 +24,7 @@
     "strictPropertyInitialization": false,
       "paths":{
         "@core/*":["./src/core/*.ts"],
+        "@assets/*":["./src/assets"]
       }
   },
   "exclude": [
