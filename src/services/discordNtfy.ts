@@ -3,13 +3,16 @@ import { ENV } from "@core/env";
 import { TOKENS } from "@core/token";
 import { Client, EmbedBuilder } from "discord.js";
 import { container } from "tsyringe";
+import { DiscordMessage } from "./discordMessage";
 
 export class DiscordNtfy {
   private client: Client;
   private discordChannelId = ENV.DISCORD_CHANNEL_ID;
+  private discordActions: DiscordMessage;
 
   constructor() {
     this.client = container.resolve<Client>(TOKENS.discord.client);
+    this.discordActions = new DiscordMessage();
   }
 
   async sendBuildSuccessToChannel() {
@@ -26,14 +29,10 @@ export class DiscordNtfy {
           text: "Reçu via ntfy",
           iconURL: "https://ntfy.sh/static/img/ntfy.png",
         });
-      if (channel.isSendable()) {
-        await channel.send({ embeds: [embed] });
-      } else {
-        console.error(
-          "Le channel récupéré n'est pas textuel. type =",
-          channel.type
-        );
-      }
+      this.discordActions.sendToChannel({
+        channelId: this.discordChannelId,
+        message: { embeds: [embed] },
+      });
 
       console.log("✅ Notification envoyée sur Discord !");
     } catch (error) {
