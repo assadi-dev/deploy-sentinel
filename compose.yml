@@ -1,14 +1,4 @@
 services:
-  gotify:
-    image: gotify/server
-    restart: unless-stopped
-    ports:
-      - 8082:80
-    environment:
-      GOTIFY_DEFAULTUSER_PASS: 'admin'
-    volumes:
-     - gotify_data:/app/data
-     
 
   ntfy:
     image: binwiederhier/ntfy
