@@ -41,8 +41,9 @@ export class SubscribeNtfy {
   onMessage() {
     try {
       this.eventSource.addEventListener("message", (event) => {
+        console.log(`📩 Nouveau message ntfy !`);
         console.log(event.data);
-        this.discordNtfy.sendBuildSuccessToChannel();
+        this.discordNtfy.sendBuildFailedToChannel();
       });
     } catch (error) {
       console.error(`Error ntfy listener:  ${error.message}`);
