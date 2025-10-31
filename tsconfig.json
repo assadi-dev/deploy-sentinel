@@ -22,10 +22,14 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-      "paths":{
-        "@core/*":["./src/core/*.ts"],
-        "@assets/*":["./src/assets"]
-      }
+    "paths": {
+      "@core/*": ["./src/core/*.ts"],
+      "@assets/*": ["./src/assets/*"],
+      "@services/*": ["./src/services/*.ts"],
+      "@models/*": ["./src/models/*.ts"],
+      "@lib/*": ["./src/lib/*.ts"],
+      "@mocks/*": ["./src/mocks/*.ts"]
+    }
   },
   "exclude": [
     "node_modules",
@@ -35,4 +39,3 @@
   ],
   "include": ["src/**/*", "config/**/*", "bin/**/*", "public/**/*"]
 }
-
