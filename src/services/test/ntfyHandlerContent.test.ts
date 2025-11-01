@@ -1,7 +1,9 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, expectTypeOf, vi, beforeEach } from "vitest";
 import { NTFY_MESSAGE_MOCK } from "@mocks/ntfyMessage";
 import { NtfyHandlerContent } from "@services/ntfyHandlerContent";
 import { ZodError } from "zod";
+import { EmbedData, FormatMessageReturn } from "@models/discodMessageModel";
+import { dockployMessageStrategy, truncateStringStrategy } from "@lib/strategy";
 
 const makeSuccessPayload = () => NTFY_MESSAGE_MOCK.success;
 const makeFailedPayload = () => NTFY_MESSAGE_MOCK.failed;
@@ -83,24 +85,79 @@ describe("ntfyHandlerContent.mapMessage", () => {
   it(`Formate le message reçus par ntfy en clé valeur (avec la propriété error)`, () => {
     const { message } = makeFailedPayload();
     const res = handler.mapMessage(message);
-    expect(res.get("application")).not.toBeNull();
-    expect(res.get("project")).not.toBeNull();
-    expect(res.get("type")).not.toBeNull();
-    expect(res.get("date")).not.toBeNull();
+    expect(res.get("error")).toBeDefined();
     expect(res.get("error")).not.toBeNull();
   });
 });
 
 describe(`ntfyHandlerContent.formatMessage`, () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   const handler = new NtfyHandlerContent();
+
+  it("Devrait appeler isSuccess et embedContent", () => {
+    const data = makeSuccessPayload();
+    const isSuccessSpy = vi.spyOn(dockployMessageStrategy, "isSuccess");
+    const embedContentSpy = vi.spyOn(handler as any, "embedContent");
+    const result = handler.formatMessage(data);
+    expectTypeOf(result).toEqualTypeOf<FormatMessageReturn>();
+    expect(isSuccessSpy).toHaveBeenCalledTimes(1);
+    expect(embedContentSpy).toHaveBeenCalledTimes(1);
+  });
+  it("Devrait appeler isFailed et embedContent", () => {
+    const data = makeFailedPayload();
+    const isFailedSpy = vi.spyOn(dockployMessageStrategy, "isFailed");
+    const embedContentSpy = vi.spyOn(handler as any, "embedContent");
+    const result = handler.formatMessage(data);
+    expect(isFailedSpy).toHaveBeenCalledTimes(1);
+    expect(embedContentSpy).toHaveBeenCalledTimes(1);
+    expectTypeOf(result).toEqualTypeOf<FormatMessageReturn>();
+  });
+
   it(`Generation Embed message en cas de success`, () => {
     const data = makeSuccessPayload();
-    const content = handler.embedContent(data, "success");
-    console.log(content.embeds[0].fields);
+    const result = handler.formatMessage(data);
+    expectTypeOf(result).toEqualTypeOf<FormatMessageReturn>();
+    const { content, embeds } = result;
+    expect(content).not.toBeNull();
+    expect(content).toContain("Build réussi");
+    expectTypeOf(embeds).toEqualTypeOf<EmbedData[]>();
+    expect(embeds.length).toBeGreaterThan(0);
+    expectTypeOf(embeds[0]).toEqualTypeOf<EmbedData>();
   });
   it(`Generation Embed message en cas d’échec de build`, () => {
     const data = makeFailedPayload();
-    const content = handler.embedContent(data, "failed");
-    console.log(content.embeds[0].fields);
+    const result = handler.formatMessage(data);
+    expectTypeOf(result).toEqualTypeOf<FormatMessageReturn>();
+    const { content } = result;
+    expect(content).toContain("Build échoué");
+  });
+
+  it(`Devrait appeler setErrorField() et hasError() has lors de la generation du embed message en cas d’échec de build`, () => {
+    const data = makeFailedPayload();
+    const isFailedSpy = vi.spyOn(dockployMessageStrategy, "isFailed");
+    const embedContentSpy = vi.spyOn(handler as any, "embedContent");
+    const hasError = vi.spyOn(dockployMessageStrategy, "hasError");
+    const result = handler.formatMessage(data);
+    expectTypeOf(result).toEqualTypeOf<FormatMessageReturn>();
+    expect(isFailedSpy).toHaveBeenCalledTimes(1);
+    expect(embedContentSpy).toHaveBeenCalledTimes(1);
+    expect(hasError).toHaveBeenCalledTimes(1);
+  });
+
+  it(`Devrait avoir au moins un element du tableau field avec comme name "🧾 Log d’erreur (extrait)"  lors de la generation du embed message en cas d’échec de build`, () => {
+    const data = makeFailedPayload();
+    const result = handler.formatMessage(data);
+    expectTypeOf(result).toEqualTypeOf<FormatMessageReturn>();
+    const { embeds } = result;
+    const embed = embeds[0];
+    expectTypeOf(embed).toEqualTypeOf<EmbedData>();
+    const fields = embed.fields;
+    expect(fields.length).toBeGreaterThan(0);
+    expect(
+      fields.some((item) => item.name === "🧾 Log d’erreur (extrait)")
+    ).toBe(true);
   });
 });

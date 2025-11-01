@@ -1,27 +1,37 @@
+import { NtfyInferModel } from "@models/ntfyModel";
+
 export const dockployMessageStrategy = {
-  isSuccess: (title: string, callback: () => void) => {
+  isSuccess: (
+    data: NtfyInferModel,
+    callback: (data?: NtfyInferModel | null) => void
+  ) => {
     try {
-      if (title.toLowerCase().includes("success")) callback();
+      const { title } = data;
+      if (title.toLowerCase().includes("success")) callback(data);
     } catch (error) {
       console.log(error);
     }
   },
-  isFailed: (title: string, callback: () => void) => {
+  isFailed: (
+    data: NtfyInferModel,
+    callback: (data?: NtfyInferModel | null) => void
+  ) => {
     try {
-      if (title.toLowerCase().includes("success")) callback();
+      const { title } = data;
+      if (title.toLowerCase().includes("failed")) callback(data);
     } catch (error) {
       console.log(error);
       return false;
     }
   },
 
-  hasError: (error: string, callback: () => void) => {
+  hasError: (errMsg: string, callback: (errMsg: string) => void) => {
     try {
-      callback();
+      callback(errMsg);
     } catch (error) {
       console.log(`Error in hasError strategy: ${error.message}`);
 
-      return error;
+      return "";
     }
   },
 };

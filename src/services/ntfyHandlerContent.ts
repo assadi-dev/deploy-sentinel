@@ -2,7 +2,11 @@ import { EMBED_COLORS } from "@core/embed";
 import { EMBED_DICTIONARY, EMBED_MESSAGE_TEMPLATE } from "@lib/discord";
 import { cleanAndLowerCase, splitMessageToKeyValue } from "@lib/parser";
 import { dockployMessageStrategy, truncateStringStrategy } from "@lib/strategy";
-import { EmbedData } from "@models/discodMessageModel";
+import {
+  EmbedContent,
+  EmbedData,
+  FormatMessageReturn,
+} from "@models/discodMessageModel";
 import { EmbedTypeMessage } from "@models/discordActionModel";
 import {
   NtfyDetailKeys,
@@ -18,31 +22,38 @@ export class NtfyHandlerContent {
     return validate.data;
   }
 
-  formatMessage(data: NtfyInferModel) {
-    let message: any = "";
-    dockployMessageStrategy.isSuccess(
-      title,
-      () => (message = this.embedContent(data, "success"))
-    );
-    dockployMessageStrategy.isFailed(
-      title,
-      () => (message = this.embedContent(data, "failed"))
-    );
+  formatMessage(data: NtfyInferModel): FormatMessageReturn {
+    let message: EmbedContent;
+    dockployMessageStrategy.isSuccess(data, (res) => {
+      if (!res) return;
+      message = this.embedContent(res, "success");
+      return message;
+    });
+    dockployMessageStrategy.isFailed(data, (res) => {
+      if (!res) return;
+      message = this.embedContent(res, "failed");
+      return message;
+    });
+    return message;
   }
 
-  embedContent(data: NtfyInferModel, type: EmbedTypeMessage) {
+  private embedContent(
+    data: NtfyInferModel,
+    type: EmbedTypeMessage
+  ): EmbedContent {
     //https://discordjs.guide/legacy/popular-topics/embeds
     const ntfyMessage = this.mapMessage(data.message);
     const content = EMBED_DICTIONARY().content[type];
     const embed = EMBED_MESSAGE_TEMPLATE()[type];
+
     const errorLog = ntfyMessage.get("error");
-    dockployMessageStrategy.hasError(errorLog, () =>
-      this.setErrorField(embed, errorLog)
+    dockployMessageStrategy.hasError(errorLog, (errorMsg) =>
+      this.setErrorField(embed, errorMsg)
     );
     return { content, embeds: [embed] };
   }
 
-  setErrorField = (embed: EmbedData, errorMessage: string) => {
+  private setErrorField = (embed: EmbedData, errorMessage: string) => {
     const errorLog: string =
       truncateStringStrategy.discordLimit(errorMessage) || "";
 

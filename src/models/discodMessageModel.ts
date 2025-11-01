@@ -25,3 +25,10 @@ export type EmbedData = {
     icon_url?: string;
   };
 };
+
+export type EmbedContent = {
+  content: string;
+  embeds: EmbedData[];
+};
+
+export type FormatMessageReturn = EmbedContent;
