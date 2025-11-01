@@ -1,7 +1,8 @@
 import { EMBED_COLORS } from "@core/embed";
 import { ENV } from "@core/env";
 import { PACKAGE_VERSION } from "@core/package";
-import { EmbedType } from "discord.js";
+import { EmbedData } from "@models/discodMessageModel";
+import { Embed, EmbedType } from "discord.js";
 
 export const EMBED_DICTIONARY = () => {
   return {
@@ -62,8 +63,8 @@ export const EMBED_MESSAGE_TEMPLATE = () => {
     },
     info: null,
   } satisfies {
-    success: EmbedType;
-    failed: EmbedType;
-    info?: EmbedType | null;
+    success: EmbedData;
+    failed: EmbedData;
+    info?: EmbedData | null;
   };
 };

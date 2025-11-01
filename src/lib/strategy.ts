@@ -15,7 +15,15 @@ export const dockployMessageStrategy = {
     }
   },
 
-  hasError: (error: string, callback: () => void) => {},
+  hasError: (error: string, callback: () => void) => {
+    try {
+      callback();
+    } catch (error) {
+      console.log(`Error in hasError strategy: ${error.message}`);
+
+      return error;
+    }
+  },
 };
 
 export const truncateStringStrategy = {

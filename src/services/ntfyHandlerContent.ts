@@ -2,6 +2,7 @@ import { EMBED_COLORS } from "@core/embed";
 import { EMBED_DICTIONARY, EMBED_MESSAGE_TEMPLATE } from "@lib/discord";
 import { cleanAndLowerCase, splitMessageToKeyValue } from "@lib/parser";
 import { dockployMessageStrategy, truncateStringStrategy } from "@lib/strategy";
+import { EmbedData } from "@models/discodMessageModel";
 import { EmbedTypeMessage } from "@models/discordActionModel";
 import {
   NtfyDetailKeys,
@@ -34,25 +35,24 @@ export class NtfyHandlerContent {
     const ntfyMessage = this.mapMessage(data.message);
     const content = EMBED_DICTIONARY().content[type];
     const embed = EMBED_MESSAGE_TEMPLATE()[type];
-    const errorLog: string = truncateStringStrategy.discordLimit(ntfyMessage.get("error")) || "";
-dockployMessageStrategy.hasError(errorLog,()=>setErrorField())
-    
-
-      embed.fields = [
-        {
-          name: "🧾 Log d’erreur (extrait)",
-          value: `\`\`\`shell\n${errorLog}\n\`\`\``,
-        },
-      ];
-    
-
+    const errorLog = ntfyMessage.get("error");
+    dockployMessageStrategy.hasError(errorLog, () =>
+      this.setErrorField(embed, errorLog)
+    );
     return { content, embeds: [embed] };
   }
 
-  setErrorField = (embed:,errorMessage: string) => {
-     const errorLog: string = truncateStringStrategy.discordLimit(ntfyMessage.get("error")) || "";
-    
-  }
+  setErrorField = (embed: EmbedData, errorMessage: string) => {
+    const errorLog: string =
+      truncateStringStrategy.discordLimit(errorMessage) || "";
+
+    embed.fields = [
+      {
+        name: "🧾 Log d’erreur (extrait)",
+        value: `\`\`\`shell\n${errorLog}\n\`\`\``,
+      },
+    ];
+  };
 
   mapMessage(message: string) {
     const map = new Map<NtfyDetailKeys, any>();
