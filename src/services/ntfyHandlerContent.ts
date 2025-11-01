@@ -1,10 +1,12 @@
-import { EMBED_COLORS } from "@core/embed";
 import { cleanAndLowerCase, splitMessageToKeyValue } from "@lib/parser";
+import { dockployMessageStrategy } from "@lib/strategy";
+import { EmbedTypeMessage } from "@models/discordActionModel";
 import {
   NtfyDetailKeys,
   NtfyInferModel,
   ntfySchemaModel,
 } from "@models/ntfyModel";
+import { title } from "process";
 
 export class NtfyHandlerContent {
   parseToNtfyData(inputs: unknown): NtfyInferModel {
@@ -14,14 +16,21 @@ export class NtfyHandlerContent {
   }
 
   formatMessage(data: NtfyInferModel) {
-    if (data.title.toLowerCase().includes("success")) {
-      const contentMessage = this.mapMessage(data.message);
-      return this.embedContent(data, EMBED_COLORS);
-    }
+    let message: any = "";
+    dockployMessageStrategy.isSuccess(
+      title,
+      () => (message = this.embedContent(data, "success"))
+    );
+    dockployMessageStrategy.isFailed(
+      title,
+      () => (message = this.embedContent(data, "failed"))
+    );
   }
 
-  embedContent(data: NtfyInferModel, color: string) {
+  embedContent(data: NtfyInferModel, type: EmbedTypeMessage) {
     //https://discordjs.guide/legacy/popular-topics/embeds
+    const contentMessage = this.mapMessage(data.message);
+    return contentMessage;
   }
 
   mapMessage(message: string) {

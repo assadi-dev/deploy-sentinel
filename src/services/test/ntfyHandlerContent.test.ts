@@ -95,7 +95,7 @@ describe(`ntfyHandlerContent.formatMessage`, () => {
   const handler = new NtfyHandlerContent();
   it(`Generation Embed message en cas de success`, () => {
     const data = makeSuccessPayload();
-    const content = handler.formatMessage(data);
+    const content = handler.embedContent(data, "success");
     console.log(content);
   });
 });

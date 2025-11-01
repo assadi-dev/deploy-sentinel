@@ -3,6 +3,7 @@
         "acttions",
         "cloudflare",
         "cloudflared",
+        "dockploy",
         "ntfy"
     ]
 }
