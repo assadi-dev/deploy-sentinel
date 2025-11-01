@@ -2,7 +2,7 @@ import { describe, it, expect, expectTypeOf, vi, beforeEach } from "vitest";
 import { NTFY_MESSAGE_MOCK } from "@mocks/ntfyMessage";
 import { NtfyHandlerContent } from "@services/ntfyHandlerContent";
 import { ZodError } from "zod";
-import { EmbedData, FormatMessageReturn } from "@models/discodMessageModel";
+import { EmbedData, FormatMessageReturn } from "@models/discordMessageModel";
 import { dockployMessageStrategy, truncateStringStrategy } from "@lib/strategy";
 
 const makeSuccessPayload = () => NTFY_MESSAGE_MOCK.success;

@@ -6,7 +6,7 @@ import {
   EmbedContent,
   EmbedData,
   FormatMessageReturn,
-} from "@models/discodMessageModel";
+} from "@models/discordMessageModel";
 import { EmbedTypeMessage } from "@models/discordActionModel";
 import {
   NtfyDetailKeys,

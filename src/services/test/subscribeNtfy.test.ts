@@ -58,9 +58,8 @@ describe("SubscribeNtfy.onMessage", () => {
     };
     //vi.mocked(DiscordNtfy).mockImplementation(() => mockDiscordNtfy);
 
-    // Créer une instance de SubscribeNtfy
     subscribeNtfy = new SubscribeNtfy();
-    // Initialiser eventSource pour les tests
+
     subscribeNtfy["eventSource"] = mockEventSource;
     subscribeNtfy["discordNtfy"] = mockDiscordNtfy;
   });
@@ -82,12 +81,10 @@ describe("SubscribeNtfy.onMessage", () => {
   it("devrait logger le message reçu et appeler sendBuildSuccessToChannel", () => {
     subscribeNtfy.onMessage();
 
-    // Récupérer le callback passé à addEventListener
     const messageCallback = mockEventSource.addEventListener.mock.calls.find(
       (call: any) => call[0] === "message"
     )[1];
 
-    // Simuler un événement message
     const mockEvent = {
       data: JSON.stringify({
         id: "test123",
@@ -98,23 +95,19 @@ describe("SubscribeNtfy.onMessage", () => {
 
     messageCallback(mockEvent);
 
-    // Vérifier que les logs sont appelés
     expect(consoleLogSpy).toHaveBeenCalledWith("📩 Nouveau message ntfy !");
     expect(consoleLogSpy).toHaveBeenCalledWith(mockEvent.data);
 
-    // Vérifier que sendBuildSuccessToChannel est appelé
     expect(mockDiscordNtfy.sendBuildSuccessToChannel).toHaveBeenCalledTimes(1);
   });
 
   it("devrait gérer les erreurs lors de l'ajout de l'event listener", () => {
-    // Simuler une erreur lors de l'ajout de l'event listener
     mockEventSource.addEventListener.mockImplementationOnce(() => {
       throw new Error("EventSource error");
     });
 
     subscribeNtfy.onMessage();
 
-    // Vérifier que l'erreur est loggée
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       "Error ntfy listener:  EventSource error"
     );
@@ -145,7 +138,6 @@ describe("SubscribeNtfy.onMessage", () => {
       (call: any) => call[0] === "message"
     )[1];
 
-    // Simuler plusieurs événements
     const mockEvent1 = { data: "message 1" };
     const mockEvent2 = { data: "message 2" };
     const mockEvent3 = { data: "message 3" };
@@ -154,7 +146,6 @@ describe("SubscribeNtfy.onMessage", () => {
     messageCallback(mockEvent2);
     messageCallback(mockEvent3);
 
-    // Vérifier que sendBuildSuccessToChannel est appelé 3 fois
     expect(mockDiscordNtfy.sendBuildSuccessToChannel).toHaveBeenCalledTimes(3);
     expect(consoleLogSpy).toHaveBeenCalledTimes(6); // 2 logs par message (titre + data)
   });
