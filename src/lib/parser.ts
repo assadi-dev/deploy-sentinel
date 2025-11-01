@@ -29,15 +29,10 @@ export const parseNtfyMessageData = (data: string): NtfyInferModel | null => {
 
 export const splitMessageToKeyValue = (input: string): [string, string] => {
   const match = input.match(/^([^:]+):(.*)$/);
-
-  try {
-    if (!match || match.length !== 3) {
-      throw new Error("Invalid input format");
-    }
-    return [match[1], match[2]];
-  } catch (error) {
-    return ["", ""];
+  if (!match || match.length !== 3) {
+    throw new Error("Invalid input format");
   }
+  return [match[1], match[2]];
 };
 
 /**
@@ -48,6 +43,5 @@ export const splitMessageToKeyValue = (input: string): [string, string] => {
 export const cleanAndLowerCase = (input: string): string => {
   // Expression régulière pour trouver tous les emojis
   const emojiRegex = /[^a-zA-Z0-9\u{1F600}-\u{1F64F}]/gu;
-
   return input.replace(emojiRegex, "").toLowerCase();
 };
