@@ -22,17 +22,18 @@ export class NtfyHandlerContent {
 
   mapMessage(message: string) {
     const map = new Map<NtfyDetailKeys, any>();
-    map.set("error", null);
-    const splitMessage = message.split("\n");
 
+    const splitMessage = message.replace(":\n", ":").split("\n");
+    map.set("error", null);
     splitMessage.forEach((item) => {
       const splitItem = splitMessageToKeyValue(item);
-
       map.set(
         cleanAndLowerCase(splitItem[0]).trim() as NtfyDetailKeys,
         splitItem[1].trim()
       );
     });
+
+    console.log(map);
 
     return map;
   }
