@@ -1,0 +1,45 @@
+{
+    "content": "✅ **[DYNASTY 8 SYSTEMS] Build réussi sur la branche principale**",
+    "embeds": [
+        {
+            "title": "🟢 Build Success — Déploiement complet",
+            "description": "Le déploiement du **MDT Dynasty 8** s’est terminé sans erreur.\nLe système est désormais **en production** et pleinement opérationnel. 🚀\n\n📍 **Statut :** `SUCCÈS`\n🕒 **Horodatage :** `2025-11-29T23:00:00Z`",
+            "color": 5763719,
+            "fields": [
+                {
+                    "name": "📦 Informations du build",
+                    "value": "• **Version :** `v1.3.3`\n• **Branche :** `main`\n• **Commit :** `b7f9d4a - Add AI integration`\n• **Durée :** `4m21s`"
+                },
+                {
+                    "name": "🧩 Changements livrés",
+                    "value": "• Nouvelle **intégration IA** 🤖\n• Ajout d’un **éditeur Rich Text** 📝\n• Amélioration de la **gestion du thème** 🎨\n• Correction de la **couleur du curseur**"
+                },
+                {
+                    "name": "🧠 Tests & Validation",
+                    "value": "• Tests unitaires : ✅ 42/42 réussis\n• Lint : ✅ Aucun avertissement\n• Audit sécurité : ✅ Conforme"
+                },
+                {
+                    "name": "🔗 Liens utiles",
+                    "value": "• 🌐 [Accéder au MDT](https://mdt.dynasty8flashback.fr)\n• 📄 [Change Log](https://mdt.dynasty8flashback.fr/changelog)\n• ⚙️ [Logs CI/CD](https://mdt.dynasty8flashback.fr/ci)"
+                }
+            ],
+            "author": {
+                "name": "Dynasty 8 Deployment Sentinel",
+                "url": "https://mdt.dynasty8flashback.fr",
+                "icon_url": "https://i.imgur.com/AfFp7pu.png"
+            },
+            "footer": {
+                "text": "Système automatisé — Build monitor v2.3",
+                "icon_url": "https://i.imgur.com/AfFp7pu.png"
+            },
+            "timestamp": "2025-11-29T23:00:00.000Z",
+            "image": {
+                "url": "https://mdt.dynasty8flashback.fr/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.408f2cda.png&w=828&q=75"
+            },
+            "thumbnail": {
+                "url": "https://i.imgur.com/AfFp7pu.png"
+            }
+        }
+    ],
+    "attachments": []
+}

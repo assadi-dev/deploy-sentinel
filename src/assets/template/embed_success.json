@@ -1,0 +1,38 @@
+{
+    "content": "🚀 **Nouveau déploiement réussi !**",
+    "embeds": [
+        {
+            "title": "✅ Build Success",
+            "description": "Le site est désormais en ligne !\n👉 [**Visiter le site**](https://mdt.dynasty8flashback.fr/)",
+            "color": 5763719,
+            "fields": [
+                {
+                    "name": "🧩 Correctifs",
+                    "value": "• Correction de la couleur du curseur 🎨\n• Amélioration de la saisie du texte ✍️"
+                },
+                {
+                    "name": "✨ Nouvelles fonctionnalités",
+                    "value": "• Intégration d'une **IA intelligente** 🤖\n• Ajout d’un **éditeur riche (Rich Text)** 📝"
+                },
+                {
+                    "name": "📦 Version",
+                    "value": "`v1.3.2` – *Build stable & optimisée*"
+                }
+            ],
+            "author": {
+                "name": "Dynasty 8",
+                "url": "https://mdt.dynasty8flashback.fr",
+                "icon_url": "https://mdt.dynasty8flashback.fr/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.408f2cda.png&w=828&q=75"
+            },
+            "footer": {
+                "text": "Sentinel Deploy • Automatisation réussie",
+                "icon_url": "https://i.imgur.com/AfFp7pu.png"
+            },
+            "timestamp": "2025-11-29T23:00:00.000Z",
+            "image": {
+                "url": "https://mdt.dynasty8flashback.fr/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.408f2cda.png&w=828&q=75"
+            }
+        }
+    ],
+    "attachments": []
+}

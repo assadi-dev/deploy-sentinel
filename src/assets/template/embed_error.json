@@ -1,0 +1,49 @@
+{
+    "content": "🚨 **[DYNASTY 8 SYSTEMS] Build échoué sur la branche principale**",
+    "embeds": [
+        {
+            "title": "❌ Build Failed — Pipeline interrompue",
+            "description": "Le déploiement du **MDT Dynasty 8** n’a pas pu être complété.\nLes ingénieurs du service technique sont déjà sur le coup 🧑‍💻.\n\n📍 **Statut :** `ÉCHEC CRITIQUE`\n🕒 **Horodatage :** `2025-11-29T23:05:00Z`",
+            "color": 14177041,
+            "fields": [
+                {
+                    "name": "📦 Informations du build",
+                    "value": "• **Version :** `v1.3.3-rc`\n• **Branche :** `main`\n• **Commit :** `a1b2c3d - Fix AI integration`\n• **Durée :** `3m47s`"
+                },
+                {
+                    "name": "⚙️ Étape en échec",
+                    "value": "`next build`\n> Erreur détectée lors de la génération du bundle front-end."
+                },
+                {
+                    "name": "🧾 Log d’erreur (extrait)",
+                    "value": "```shell\n[ERROR] Failed to compile: Cannot read properties of undefined (reading 'color')\n[BUILD] ✖ Compilation terminated — exit code 1\n```"
+                },
+                {
+                    "name": "🧭 Étapes de résolution",
+                    "value": "1. Vérifier la variable d’environnement `NEXT_PUBLIC_COLOR` 🎨\n2. Lancer un `yarn lint && yarn test`\n3. Relancer le pipeline avec `--skip-cache`"
+                },
+                {
+                    "name": "🔗 Liens utiles",
+                    "value": "• 🧠 [Logs CI/CD](https://mdt.dynasty8flashback.fr/ci)\n• 🌍 [MDT (Production)](https://mdt.dynasty8flashback.fr)\n• 🧩 [Dernier commit](https://github.com/dynasty8/mdt/commit/a1b2c3d)"
+                }
+            ],
+            "author": {
+                "name": "Dynasty 8 Deployment Sentinel",
+                "url": "https://mdt.dynasty8flashback.fr",
+                "icon_url": "https://i.imgur.com/AfFp7pu.png"
+            },
+            "footer": {
+                "text": "Système automatisé — Build monitor v2.3",
+                "icon_url": "https://i.imgur.com/AfFp7pu.png"
+            },
+            "timestamp": "2025-11-29T23:05:00.000Z",
+            "image": {
+                "url": "https://i.imgur.com/Vx9wYpO.png"
+            },
+            "thumbnail": {
+                "url": "https://i.imgur.com/AfFp7pu.png"
+            }
+        }
+    ],
+    "attachments": []
+}

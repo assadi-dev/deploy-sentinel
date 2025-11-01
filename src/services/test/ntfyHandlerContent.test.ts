@@ -90,3 +90,12 @@ describe("ntfyHandlerContent.mapMessage", () => {
     expect(res.get("error")).not.toBeNull();
   });
 });
+
+describe(`ntfyHandlerContent.formatMessage`, () => {
+  const handler = new NtfyHandlerContent();
+  it(`Generation Embed message en cas de success`, () => {
+    const data = makeSuccessPayload();
+    const content = handler.formatMessage(data);
+    console.log(content);
+  });
+});

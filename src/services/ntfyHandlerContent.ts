@@ -1,3 +1,4 @@
+import { EMBED_COLORS } from "@core/embed";
 import { cleanAndLowerCase, splitMessageToKeyValue } from "@lib/parser";
 import {
   NtfyDetailKeys,
@@ -15,10 +16,13 @@ export class NtfyHandlerContent {
   formatMessage(data: NtfyInferModel) {
     if (data.title.toLowerCase().includes("success")) {
       const contentMessage = this.mapMessage(data.message);
+      return this.embedContent(data, EMBED_COLORS);
     }
   }
 
-  embedContent(data: any, color: string) {}
+  embedContent(data: NtfyInferModel, color: string) {
+    //https://discordjs.guide/legacy/popular-topics/embeds
+  }
 
   mapMessage(message: string) {
     const map = new Map<NtfyDetailKeys, any>();
