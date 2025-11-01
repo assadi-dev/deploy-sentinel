@@ -24,3 +24,21 @@ export const ntfySchemaModel = z.object({
 });
 
 export type NtfyInferModel = z.infer<typeof ntfySchemaModel>;
+
+export type NtfyDetail = {
+  project: string;
+  application: string;
+  type: string;
+  date: string;
+  error: string | null;
+};
+
+export enum NtfyDetailEnum {
+  project = "project",
+  application = "application",
+  type = "type",
+  date = "date",
+  error = "error",
+}
+
+export type NtfyDetailKeys = keyof typeof NtfyDetailEnum;

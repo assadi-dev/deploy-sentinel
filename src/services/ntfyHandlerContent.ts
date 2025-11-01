@@ -1,4 +1,9 @@
-import { NtfyInferModel, ntfySchemaModel } from "@models/ntfyModel";
+import { cleanAndLowerCase, splitMessageToKeyValue } from "@lib/parser";
+import {
+  NtfyDetailKeys,
+  NtfyInferModel,
+  ntfySchemaModel,
+} from "@models/ntfyModel";
 
 export class NtfyHandlerContent {
   parseToNtfyData(inputs: unknown): NtfyInferModel {
@@ -7,9 +12,28 @@ export class NtfyHandlerContent {
     return validate.data;
   }
 
-  formatSuccessMessage(data: NtfyInferModel) {}
+  formatMessage(data: NtfyInferModel) {
+    if (data.title.toLowerCase().includes("success")) {
+      const contentMessage = this.mapMessage(data.message);
+    }
+  }
 
-  embedSuccess(data: any) {}
+  embedContent(data: any, color: string) {}
 
-  mapMessage(message: string) {}
+  mapMessage(message: string) {
+    const map = new Map<NtfyDetailKeys, any>();
+    map.set("error", null);
+    const splitMessage = message.split("\n");
+
+    splitMessage.forEach((item) => {
+      const splitItem = splitMessageToKeyValue(item);
+
+      map.set(
+        cleanAndLowerCase(splitItem[0]).trim() as NtfyDetailKeys,
+        splitItem[1].trim()
+      );
+    });
+
+    return map;
+  }
 }

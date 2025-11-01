@@ -26,3 +26,24 @@ export const parseNtfyMessageData = (data: string): NtfyInferModel | null => {
     return null;
   }
 };
+
+export const splitMessageToKeyValue = (input: string): [string, string] => {
+  const match = input.match(/^([^:]+): (.*)$/);
+
+  if (!match || match.length !== 3) {
+    throw new Error("Invalid input format");
+  }
+  return [match[1], match[2]];
+};
+
+/**
+ * Supprimer les emojis et passer tout en minuscules
+ * @param input
+ * @returns
+ */
+export const cleanAndLowerCase = (input: string): string => {
+  // Expression régulière pour trouver tous les emojis
+  const emojiRegex =
+    /([\u{1F600}-\u{1F64F}|\u{1F300}-\u{1F5FF}|\u{1F680}-\u{1F6FF}|\u{2600}-\u{26FF}|\u{2700}-\u{27BF}|\uD83C\uDF00-\uD83D\uDDFF])/gu;
+  return input.replace(emojiRegex, "").toLowerCase();
+};

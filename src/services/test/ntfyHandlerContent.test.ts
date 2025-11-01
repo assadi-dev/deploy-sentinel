@@ -3,13 +3,14 @@ import { NTFY_MESSAGE_MOCK } from "@mocks/ntfyMessage";
 import { NtfyHandlerContent } from "@services/ntfyHandlerContent";
 import { ZodError } from "zod";
 
-const makeValidPayload = () => NTFY_MESSAGE_MOCK.success;
+const makeSuccessPayload = () => NTFY_MESSAGE_MOCK.success;
+const makeFailedPayload = () => NTFY_MESSAGE_MOCK.failed;
 
 describe("ntfyHandlerContent.parseToNtfyData", () => {
   const handler = new NtfyHandlerContent();
 
   it("retourne l’objet parsé quand la payload est valide", () => {
-    const input = makeValidPayload();
+    const input = makeSuccessPayload();
     const res = handler.parseToNtfyData(input);
     expect(res).toEqual(input);
     expect(res.title).toBeDefined();
@@ -21,7 +22,7 @@ describe("ntfyHandlerContent.parseToNtfyData", () => {
   });
 
   it("Vérifie si dans le tableau actions si l'un des objets contient un url valide", () => {
-    const input = makeValidPayload();
+    const input = makeSuccessPayload();
     const res = handler.parseToNtfyData(input);
     const actions = res.actions;
     expect(Array.isArray(actions)).toBe(true);
@@ -30,7 +31,7 @@ describe("ntfyHandlerContent.parseToNtfyData", () => {
   });
 
   it("échoue si un champ requis manque (ex: message)", () => {
-    const { message, ...withoutTitle } = makeValidPayload();
+    const { message, ...withoutTitle } = makeSuccessPayload();
     expect(() => handler.parseToNtfyData(withoutTitle as any)).toThrow(
       ZodError
     );
@@ -43,7 +44,7 @@ describe("ntfyHandlerContent.parseToNtfyData", () => {
   });
 
   it("échoue si un objet d’`actions` est invalide (ex: url non-string)", () => {
-    const bad = makeValidPayload();
+    const bad = makeSuccessPayload();
     // @ts-expect-error: on invalide volontairement la shape
     bad.actions[0].url = 12345;
     expect(() => handler.parseToNtfyData(bad)).toThrow(ZodError);
@@ -62,7 +63,21 @@ describe("ntfyHandlerContent.parseToNtfyData", () => {
   });
 
   it("échoue si `time` ou `expires` ne sont pas des nombres", () => {
-    const bad = { ...makeValidPayload(), time: "1700000000" as any };
+    const bad = { ...makeSuccessPayload(), time: "1700000000" as any };
     expect(() => handler.parseToNtfyData(bad)).toThrow(ZodError);
+  });
+});
+
+describe("ntfyHandlerContent.mapMessage", () => {
+  const handler = new NtfyHandlerContent();
+  it(`Formate le message reçus par ntfy en clé valeur`, () => {
+    const { message } = makeFailedPayload();
+    const res = handler.mapMessage(message);
+
+    expect(res.get("application")).not.toBeNull();
+    expect(res.get("project")).not.toBeNull();
+    expect(res.get("type")).not.toBeNull();
+    expect(res.get("date")).not.toBeNull();
+    expect(res.get("error")).toBeDefined();
   });
 });
