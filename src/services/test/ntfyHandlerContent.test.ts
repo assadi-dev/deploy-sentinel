@@ -71,13 +71,22 @@ describe("ntfyHandlerContent.parseToNtfyData", () => {
 describe("ntfyHandlerContent.mapMessage", () => {
   const handler = new NtfyHandlerContent();
   it(`Formate le message reçus par ntfy en clé valeur`, () => {
-    const { message } = makeFailedPayload();
+    const { message } = makeSuccessPayload();
     const res = handler.mapMessage(message);
-
     expect(res.get("application")).not.toBeNull();
     expect(res.get("project")).not.toBeNull();
     expect(res.get("type")).not.toBeNull();
     expect(res.get("date")).not.toBeNull();
     expect(res.get("error")).toBeDefined();
+  });
+
+  it(`Formate le message reçus par ntfy en clé valeur (avec la propriété error)`, () => {
+    const { message } = makeFailedPayload();
+    const res = handler.mapMessage(message);
+    expect(res.get("application")).not.toBeNull();
+    expect(res.get("project")).not.toBeNull();
+    expect(res.get("type")).not.toBeNull();
+    expect(res.get("date")).not.toBeNull();
+    expect(res.get("error")).not.toBeNull();
   });
 });
