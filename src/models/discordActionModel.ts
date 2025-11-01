@@ -16,3 +16,5 @@ export type SendMessageToChannelArgs = {
   channelId: string;
   message: SendMessageOptions;
 };
+
+export type EmbedTypeMessage = "success" | "failed" | "info";
