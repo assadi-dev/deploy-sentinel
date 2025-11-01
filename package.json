@@ -1,7 +1,7 @@
 {
   "name": "deploy-sentinel",
   "version": "1.0.0",
-  "description": "Bot Discord qui alerte des différentes phases de déploiement",
+  "description": "Bot Discord qui alerte des différentes phases de déploiement de la plateform dockpoy + ntfy",
   "scripts": {
     "build": "npx tsc",
     "dev": "nodemon",

@@ -1,3 +1,4 @@
+import { EMBED_COLORS } from "@core/embed";
 import { cleanAndLowerCase, splitMessageToKeyValue } from "@lib/parser";
 import { dockployMessageStrategy } from "@lib/strategy";
 import { EmbedTypeMessage } from "@models/discordActionModel";
@@ -30,7 +31,6 @@ export class NtfyHandlerContent {
   embedContent(data: NtfyInferModel, type: EmbedTypeMessage) {
     //https://discordjs.guide/legacy/popular-topics/embeds
     const contentMessage = this.mapMessage(data.message);
-    return contentMessage;
   }
 
   mapMessage(message: string) {
