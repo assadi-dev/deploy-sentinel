@@ -96,6 +96,11 @@ describe(`ntfyHandlerContent.formatMessage`, () => {
   it(`Generation Embed message en cas de success`, () => {
     const data = makeSuccessPayload();
     const content = handler.embedContent(data, "success");
-    console.log(content);
+    console.log(content.embeds[0].fields);
+  });
+  it(`Generation Embed message en cas d’échec de build`, () => {
+    const data = makeFailedPayload();
+    const content = handler.embedContent(data, "failed");
+    console.log(content.embeds[0].fields);
   });
 });

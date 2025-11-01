@@ -1,6 +1,7 @@
 import { EMBED_COLORS } from "@core/embed";
+import { EMBED_DICTIONARY, EMBED_MESSAGE_TEMPLATE } from "@lib/discord";
 import { cleanAndLowerCase, splitMessageToKeyValue } from "@lib/parser";
-import { dockployMessageStrategy } from "@lib/strategy";
+import { dockployMessageStrategy, truncateStringStrategy } from "@lib/strategy";
 import { EmbedTypeMessage } from "@models/discordActionModel";
 import {
   NtfyDetailKeys,
@@ -30,7 +31,27 @@ export class NtfyHandlerContent {
 
   embedContent(data: NtfyInferModel, type: EmbedTypeMessage) {
     //https://discordjs.guide/legacy/popular-topics/embeds
-    const contentMessage = this.mapMessage(data.message);
+    const ntfyMessage = this.mapMessage(data.message);
+    const content = EMBED_DICTIONARY().content[type];
+    const embed = EMBED_MESSAGE_TEMPLATE()[type];
+    const errorLog: string = truncateStringStrategy.discordLimit(ntfyMessage.get("error")) || "";
+dockployMessageStrategy.hasError(errorLog,()=>setErrorField())
+    
+
+      embed.fields = [
+        {
+          name: "🧾 Log d’erreur (extrait)",
+          value: `\`\`\`shell\n${errorLog}\n\`\`\``,
+        },
+      ];
+    
+
+    return { content, embeds: [embed] };
+  }
+
+  setErrorField = (embed:,errorMessage: string) => {
+     const errorLog: string = truncateStringStrategy.discordLimit(ntfyMessage.get("error")) || "";
+    
   }
 
   mapMessage(message: string) {

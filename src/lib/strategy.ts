@@ -14,4 +14,15 @@ export const dockployMessageStrategy = {
       return false;
     }
   },
+
+  hasError: (error: string, callback: () => void) => {},
+};
+
+export const truncateStringStrategy = {
+  discordLimit: (string: string): string => {
+    if (string.length > 1000) {
+      return string.substring(0, 1000) + "\n... ";
+    }
+    return string;
+  },
 };
